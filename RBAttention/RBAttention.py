@@ -32,25 +32,37 @@ def Block(U, inp):
 
     W = U  # 64
 
-    shortcut = inp
-
-    shortcut = conv2d_bn(shortcut, int(W * 0.167) + int(W * 0.333) + int(W * 0.5), 1, 1, activation=None,
+    shortcut4 = conv2d_bn(inp, int(W * 0.167) + int(W * 0.333) + int(W * 0.5), 1, 1, activation=None,
                          padding='same')
 
     conv3x3 = conv2d_bn(inp, int(W * 0.167), 3, 3, activation='relu', padding='same')
+    shortcut1 = conv2d_bn(inp, int(W * 0.167), 1, 1, activation=None, padding='same')
+    branch1 = add([conv3x3, shortcut1])
+    branch1 = Activation('relu')(branch1)
+    branch1 = BatchNormalization(axis=3)(branch1)
 
     conv5x5 = conv2d_bn(conv3x3, int(W * 0.333), 3, 3, activation='relu', padding='same')
+    shortcut2 = conv2d_bn(inp, int(W * 0.333), 1, 1, activation=None, padding='same')
+    branch2 = add([conv5x5, shortcut2])
+    branch2 = Activation('relu')(branch2)
+    branch2 = BatchNormalization(axis=3)(branch2)
+
 
     conv7x7 = conv2d_bn(conv5x5, int(W * 0.5), 3, 3, activation='relu', padding='same')
+    shortcut3 = conv2d_bn(inp, int(W * 0.5), 1, 1, activation=None, padding='same')
+    branch3 = add([conv7x7, shortcut3])
+    branch3 = Activation('relu')(branch3)
+    branch3 = BatchNormalization(axis=3)(branch3)
 
-    out = concatenate([conv3x3, conv5x5, conv7x7], axis=3)
+    out = concatenate([branch1, branch2, branch3], axis=3)
     out = BatchNormalization(axis=3)(out)
 
-    out = add([shortcut, out])
+    out = add([shortcut4, out])
     out = Activation('relu')(out)
     out = BatchNormalization(axis=3)(out)
 
     return out  # 64
+
 
 
 
