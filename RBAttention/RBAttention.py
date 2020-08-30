@@ -102,7 +102,6 @@ def AttentionBlock(x, g, inter_channels):
 
 def RBAttention(height, width, n_channels):
     '''
-    MultiResUNet
 
     Arguments:
         height {int} -- height of image
@@ -110,7 +109,7 @@ def RBAttention(height, width, n_channels):
         n_channels {int} -- number of channels in image
 
     Returns:
-        [keras nets] -- MultiResUNet nets
+        [keras nets] -- FUNet nets
     '''
 
     inputs = Input((height, width, n_channels))
