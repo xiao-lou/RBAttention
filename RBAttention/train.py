@@ -106,14 +106,14 @@ def evaluateModel(model, X_test, Y_test, batchSize):
 
 def trainStep(model, X_train, Y_train, X_test, Y_test, epochs, batchSize):
 
-    model.fit(x=X_train, y=Y_train, batch_size=batchSize, epochs=epochs, verbose=1,
-              callbacks=[TensorBoard(log_dir='./logs')])
+#     model.fit(x=X_train, y=Y_train, batch_size=batchSize, epochs=epochs, verbose=1,
+#               callbacks=[TensorBoard(log_dir='./logs')])
 
-    # for epoch in range(epochs):
-    #     print('Epoch : {}'.format(epoch + 1))
-    #     model.fit(x=X_train, y=Y_train, batch_size=batchSize, epochs=1, verbose=1)
-    #
-    #     evaluateModel(model, X_test, Y_test, batchSize)
+    for epoch in range(epochs):
+        print('Epoch : {}'.format(epoch + 1))
+        model.fit(x=X_train, y=Y_train, batch_size=batchSize, epochs=1, verbose=1)
+    
+        evaluateModel(model, X_test, Y_test, batchSize)
 
     return model
 
