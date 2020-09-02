@@ -18,7 +18,7 @@ def loadDataSet():
     Y = []
 
     for img_fl  in tqdm(img_files):
-        # print(img_fl)  # imgx10.jpg
+       
         if (img_fl.split('.')[-1] == 'tif'):
             # cv2.INTER_CUBIC 4x4像素邻域的双三次插值,cv2.IMREAD_COLOR 默认使用该种标识。加载一张彩色图片，忽视它的透明度
             img = cv2.imread('./CVC-ClinicDB/Original/{}'.format(img_fl), cv2.IMREAD_COLOR)
