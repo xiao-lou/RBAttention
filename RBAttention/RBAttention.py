@@ -31,8 +31,9 @@ def trans_conv2d_bn(x, filters, num_row, num_col, padding='same', strides=(2, 2)
 def Block(U, inp):
 
     W = U  # 64
-
-    shortcut4 = conv2d_bn(inp, int(W * 0.167) + int(W * 0.333) + int(W * 0.5), 1, 1, activation=None,
+   
+   shortcut4 = MaxPooling2D(pool_size=(3,3),strides=1,padding='same')(inp)
+    shortcut4 = conv2d_bn(shortcut4, int(W * 0.167) + int(W * 0.333) + int(W * 0.5), 1, 1, activation=None,
                          padding='same')
 
     conv3x3 = conv2d_bn(inp, int(W * 0.167), 3, 3, activation='relu', padding='same')
